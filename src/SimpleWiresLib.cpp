@@ -71,4 +71,12 @@ uint8_t SimpleWires::getColorPos(int pos, int color){
     return 6;
 }
 
+uint8_t SimpleWires::getLastColorPos(int color){
+    for(int i = 5; i>=0; i--){
+        if(wires[i]==color){
+            return i;
+        }
+    }
+    return 6;
+}
 

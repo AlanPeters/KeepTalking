@@ -30,8 +30,7 @@ public:
     uint8_t getLastWirePosition();
     uint8_t getWireAtPosition(int pos);
     uint8_t getColorPos(int pos, int color);
-
-
+    uint8_t getLastColorPos(int color);
 
 };
 

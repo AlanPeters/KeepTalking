@@ -30,3 +30,12 @@ TEST(basic_wires_test, getColorPos){
     EXPECT_EQ(6,testWires.getColorPos(4,SimpleWires::RED));
 
 }
+
+TEST(basic_wires_test, getLastColorPos){
+    uint16_t testInput[6] = {100,1000,100,1000,100,300};
+    SimpleWires testWires(testInput);
+
+    EXPECT_EQ(4,testWires.getLastColorPos(SimpleWires::RED));
+    EXPECT_EQ(5,testWires.getLastColorPos(SimpleWires::WHITE));
+    EXPECT_EQ(6,testWires.getLastColorPos(SimpleWires::BLACK));
+}
