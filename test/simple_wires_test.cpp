@@ -1,18 +1,15 @@
 #include "SimpleWiresLib.h"
 #include "gtest/gtest.h"
 
-TEST(basic_wires_test, count_wires)
+TEST(BasicWiresTest, CountWires)
 {
-    uint16_t testInt[6] = { 100, 100, 100, 100, 100, 100 };
-
-    SimpleWires testWires (testInt);
-
-
+    uint16_t testInput[6] = { 100, 100, 100, 100, 100, 100 };
+    SimpleWires testWires (testInput);
 
     EXPECT_EQ(6, testWires.countColor(1));
 }
 
-TEST(three_wire_test, count_wires)
+TEST(ThreeWireTest, CountWires)
 {
     uint16_t testInput[6] = {1000,100,300,1000,1000,101};
     SimpleWires testWires(testInput);
@@ -20,7 +17,7 @@ TEST(three_wire_test, count_wires)
     EXPECT_EQ(2,testWires.countColor(SimpleWires::RED));
 }
 
-TEST(basic_wires_test, getColorPos){
+TEST(BasicWiresTest, GetColorPos){
     uint16_t testInput[6] = {100,1000,100,1000,100,300};
     SimpleWires testWires(testInput);
 
@@ -31,7 +28,7 @@ TEST(basic_wires_test, getColorPos){
 
 }
 
-TEST(basic_wires_test, getLastColorPos){
+TEST(BasicWiresTest, GetLastColorPos){
     uint16_t testInput[6] = {100,1000,100,1000,100,300};
     SimpleWires testWires(testInput);
 
@@ -39,3 +36,30 @@ TEST(basic_wires_test, getLastColorPos){
     EXPECT_EQ(5,testWires.getLastColorPos(SimpleWires::WHITE));
     EXPECT_EQ(6,testWires.getLastColorPos(SimpleWires::BLACK));
 }
+
+TEST(SolutionTest, ThreeWireTestLastWireWhite){
+    //red, blue, white
+    uint16_t testInput[6] = {100,1000,500,1000,300,1000};
+    SimpleWires testWires(testInput);
+
+    EXPECT_EQ(4,testWires.calculateSolution());
+}
+
+TEST(SolutionTest, ThreeWireTestNoMatch){
+    //red, red, red
+    uint16_t testInput[6] = {100,1000,100,1000,100,1000};
+    SimpleWires testWires(testInput);
+
+    EXPECT_EQ(4,testWires.calculateSolution());
+}
+
+TEST(SolutionTest, ThreeWireTestTwoBlue){
+    //blue, blue, red
+    uint16_t testInput[6] = {700,1000,700,1000,100,1000};
+    SimpleWires testWires(testInput);
+
+    EXPECT_EQ(2,testWires.calculateSolution());
+}
+
+
+
