@@ -17,7 +17,8 @@ const WIRE SimpleWires::WIRES[6] = {
     {"BLACK", 777,935} };
 
 
-SimpleWires::SimpleWires(uint16_t values[]){
+SimpleWires::SimpleWires(uint16_t values[], uint8_t serialNumberOdd){
+    SerialNumberOdd = serialNumberOdd;
     for(int i = 0; i<6; i++){
         for(int j = 0; j<6; j++){
             if(values[i] >= WIRES[j].lower && values[i] <= WIRES[j].upper) {
@@ -26,11 +27,53 @@ SimpleWires::SimpleWires(uint16_t values[]){
             }
         }
     }
-
-
-
 }
 
+
+uint8_t SimpleWires::calculateSolution(){
+    uint8_t numWires = 6 - countColor(OFF);
+    if(numWires == 3){
+        if(countColor(RED) == 0){
+            return getWireAtPosition(1);
+        }
+        if(wires[getLastWirePosition()] == WHITE){
+            return getLastWirePosition();
+        }
+        if(countColor(BLUE) > 1){
+            return getLastColorPos(BLUE);
+        }
+        return getLastWirePosition();
+    }
+    if(numWires == 4){
+        if(countColor(RED)>1 && SerialNumberOdd != 0){
+            return getLastColorPos(RED);
+        }
+        if(wires[getLastWirePosition()]==YELLOW && countColor(RED)==0){
+            return getWireAtPosition(0);
+        }
+        if(countColor(BLUE)==1){
+            return getWireAtPosition(0);
+        }
+        if(countColor(YELLOW)>1){
+            return getLastWirePosition();
+        }
+        return getWireAtPosition(1);
+    }
+    if(numWires == 5){
+        if(wires[getLastWirePosition()]==BLACK && SerialNumberOdd !=0){
+            return getWireAtPosition(3);
+        }
+        if(countColor(RED)==1 && countColor(YELLOW)>1){
+            return getWireAtPosition(0);
+        }
+        if(countColor(BLACK)==0){
+            return getWireAtPosition(1);
+        }
+        return getWireAtPosition(0);
+    }
+
+    return 6;
+}
 
 
 
