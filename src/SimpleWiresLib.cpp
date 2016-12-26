@@ -71,7 +71,18 @@ uint8_t SimpleWires::calculateSolution(){
         }
         return getWireAtPosition(0);
     }
-
+    if(numWires == 6){
+        if(countColor(YELLOW)==0 && SerialNumberOdd){
+            return getWireAtPosition(2);
+        }
+        if(countColor(YELLOW)==1 && countColor(WHITE) > 1){
+            return getWireAtPosition(3);
+        }
+        if(countColor(RED)==0){
+            return getLastWirePosition();
+        }
+        return getWireAtPosition(3);
+    }
     return 6;
 }
 
