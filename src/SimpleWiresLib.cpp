@@ -8,24 +8,19 @@ const int SimpleWires::OFF = 0,
       SimpleWires::YELLOW = 4,
       SimpleWires::BLACK = 5;
 
-const WIRE SimpleWires::WIRES[6] = {
-    {"OFF", 936, 1023},
-    {"RED", 0,255},
-    {"WHITE", 256, 419},
-    {"BLUE", 420, 608},
-    {"YELLOW", 609, 776},
-    {"BLACK", 777,935} };
+//const WIRE SimpleWires::WIRES[6] = {
+    //{"OFF", 936, 1023},
+    //{"RED", 0,255},
+    //{"WHITE", 256, 419},
+    //{"BLUE", 420, 608},
+    //{"YELLOW", 609, 776},
+    //{"BLACK", 777,935} };
 
 
-SimpleWires::SimpleWires(uint16_t values[], uint8_t serialNumberOdd){
+SimpleWires::SimpleWires(uint16_t wires[], uint8_t serialNumberOdd){
     SerialNumberOdd = serialNumberOdd;
-    for(int i = 0; i<6; i++){
-        for(int j = 0; j<6; j++){
-            if(values[i] >= WIRES[j].lower && values[i] <= WIRES[j].upper) {
-                wires[i] = j;
-                break;
-            }
-        }
+    for(int i = 0; i < 6; i++){
+        this->wires[i] = wires[i];
     }
 }
 

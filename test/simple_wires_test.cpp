@@ -1,45 +1,52 @@
 #include "SimpleWiresLib.h"
 #include "gtest/gtest.h"
 
+#define RED     SimpleWires::RED
+#define WHITE   SimpleWires::WHITE
+#define BLUE    SimpleWires::BLUE
+#define YELLOW  SimpleWires::YELLOW
+#define BLACK   SimpleWires::BLACK
+#define OFF     SimpleWires::OFF
+
+
 TEST(BasicWiresTest, CountWires)
 {
-    uint16_t testInput[6] = { 100, 100, 100, 100, 100, 100 };
+    uint16_t testInput[6] = { RED, RED, RED, RED, RED, RED };
     SimpleWires testWires (testInput, 0);
 
-    EXPECT_EQ(6, testWires.countColor(1));
+    EXPECT_EQ(6, testWires.countColor(RED));
 }
 
 TEST(ThreeWireTest, CountWires)
 {
-    uint16_t testInput[6] = {1000,100,300,1000,1000,101};
+    uint16_t testInput[6] = {OFF,RED,WHITE,OFF,OFF,RED};
     SimpleWires testWires(testInput, 0);
 
-    EXPECT_EQ(2,testWires.countColor(SimpleWires::RED));
+    EXPECT_EQ(2,testWires.countColor(RED));
 }
 
 TEST(BasicWiresTest, GetColorPos){
-    uint16_t testInput[6] = {100,1000,100,1000,100,300};
+    uint16_t testInput[6] = {RED,OFF,RED,OFF,RED,WHITE};
     SimpleWires testWires(testInput, 0);
 
-    EXPECT_EQ(0,testWires.getColorPos(1,SimpleWires::RED));
-    EXPECT_EQ(2,testWires.getColorPos(2,SimpleWires::RED));
-    EXPECT_EQ(4,testWires.getColorPos(3,SimpleWires::RED));
-    EXPECT_EQ(6,testWires.getColorPos(4,SimpleWires::RED));
-
+    EXPECT_EQ(0,testWires.getColorPos(1,RED));
+    EXPECT_EQ(2,testWires.getColorPos(2,RED));
+    EXPECT_EQ(4,testWires.getColorPos(3,RED));
+    EXPECT_EQ(6,testWires.getColorPos(4,RED));
 }
 
 TEST(BasicWiresTest, GetLastColorPos){
-    uint16_t testInput[6] = {100,1000,100,1000,100,300};
+    uint16_t testInput[6] = {RED,OFF,RED,OFF,RED,WHITE};
     SimpleWires testWires(testInput, 0);
 
-    EXPECT_EQ(4,testWires.getLastColorPos(SimpleWires::RED));
-    EXPECT_EQ(5,testWires.getLastColorPos(SimpleWires::WHITE));
-    EXPECT_EQ(6,testWires.getLastColorPos(SimpleWires::BLACK));
+    EXPECT_EQ(4,testWires.getLastColorPos(RED));
+    EXPECT_EQ(5,testWires.getLastColorPos(WHITE));
+    EXPECT_EQ(6,testWires.getLastColorPos(BLACK));
 }
 
 TEST(SolutionTest, ThreeWireTestLastWireWhite){
     //red, blue, white
-    uint16_t testInput[6] = {100,1000,500,1000,300,1000};
+    uint16_t testInput[6] = {RED,OFF,BLUE,OFF,WHITE,OFF};
     SimpleWires testWires(testInput, 0);
 
     EXPECT_EQ(4,testWires.calculateSolution());
@@ -47,7 +54,7 @@ TEST(SolutionTest, ThreeWireTestLastWireWhite){
 
 TEST(SolutionTest, ThreeWireTestNoMatch){
     //red, red, red
-    uint16_t testInput[6] = {100,1000,100,1000,100,1000};
+    uint16_t testInput[6] = {RED,OFF,RED,OFF,RED,OFF};
     SimpleWires testWires(testInput, 0);
 
     EXPECT_EQ(4,testWires.calculateSolution());
@@ -55,7 +62,7 @@ TEST(SolutionTest, ThreeWireTestNoMatch){
 
 TEST(SolutionTest, ThreeWireTestTwoBlue){
     //blue, blue, red
-    uint16_t testInput[6] = {500,1000,500,1000,100,1000};
+    uint16_t testInput[6] = {BLUE,OFF,BLUE,OFF,RED,OFF};
     SimpleWires testWires(testInput, 0);
 
     EXPECT_EQ(2,testWires.calculateSolution());
@@ -63,7 +70,7 @@ TEST(SolutionTest, ThreeWireTestTwoBlue){
 
 TEST(SolutionTest, FourWiresTestTwoRedOdd){
     //blue, blue, red, red
-    uint16_t testInput[6] = {500,1000,500,100,100,1000};
+    uint16_t testInput[6] = {BLUE,OFF,BLUE,RED,RED,OFF};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(4,testWires.calculateSolution());
@@ -71,7 +78,7 @@ TEST(SolutionTest, FourWiresTestTwoRedOdd){
 
 TEST(SolutionTest, FourWiresTestNoRedLastYellow){
     //blue, blue, black,yellow
-    uint16_t testInput[6] = {500,1000,500,900,1000,700};
+    uint16_t testInput[6] = {BLUE,OFF,BLUE,BLACK,OFF,YELLOW};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(0,testWires.calculateSolution());
@@ -79,7 +86,7 @@ TEST(SolutionTest, FourWiresTestNoRedLastYellow){
 
 TEST(SolutionTest, FourWiresTestExactlyOneBlue){
     //white, red, blue,yellow
-    uint16_t testInput[6] = {1000,300,100,500,1000,700};
+    uint16_t testInput[6] = {OFF,WHITE,RED,BLUE,OFF,YELLOW};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(1,testWires.calculateSolution());
@@ -87,7 +94,7 @@ TEST(SolutionTest, FourWiresTestExactlyOneBlue){
 
 TEST(SolutionTest, FourWiresTestMoreThanOneYellow){
     //white, red, yellow,yellow
-    uint16_t testInput[6] = {1000,300,100,705,1000,700};
+    uint16_t testInput[6] = {OFF,WHITE,RED,YELLOW,OFF,YELLOW};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(5,testWires.calculateSolution());
@@ -96,7 +103,7 @@ TEST(SolutionTest, FourWiresTestMoreThanOneYellow){
 
 TEST(SolutionTest, FourWiresTestNoMatch){
     //white, white, white, white
-    uint16_t testInput[6] = {1000,300,300,305,300,1000};
+    uint16_t testInput[6] = {OFF,WHITE,WHITE,WHITE,WHITE,OFF};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(2,testWires.calculateSolution());
@@ -104,7 +111,7 @@ TEST(SolutionTest, FourWiresTestNoMatch){
 
 TEST(SolutionTest, FiveWiresTestLastBlackOdd){
     //Blue, Red, Black, White, Black
-    uint16_t testInput[6] = {500,1000,100,800,300,800};
+    uint16_t testInput[6] = {BLUE,OFF,RED,BLACK,WHITE,BLACK};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(4,testWires.calculateSolution());
@@ -112,7 +119,7 @@ TEST(SolutionTest, FiveWiresTestLastBlackOdd){
 
 TEST(SolutionTest, FiveWiresTestLastBlackEven){
     //Blue, Red, Black, White, Black
-    uint16_t testInput[6] = {500,1000,100,800,300,800};
+    uint16_t testInput[6] = {BLUE,OFF,RED,BLACK,WHITE,BLACK};
     SimpleWires testWires(testInput, 0);
 
     EXPECT_EQ(0,testWires.calculateSolution());
@@ -120,7 +127,7 @@ TEST(SolutionTest, FiveWiresTestLastBlackEven){
 
 TEST(SolutionTest, FiveWiresTestOneRedTwoYellow){
     //Blue, Red, Black, Yellow, Yellow
-    uint16_t testInput[6] = {500,100,1000,800,700,700};
+    uint16_t testInput[6] = {BLUE,RED,OFF,BLACK,YELLOW,YELLOW};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(0,testWires.calculateSolution());
@@ -128,7 +135,7 @@ TEST(SolutionTest, FiveWiresTestOneRedTwoYellow){
 
 TEST(SolutionTest, FiveWiresTestNoBlack){
     //Blue, Blue, Blue, Yellow, Yellow
-    uint16_t testInput[6] = {500,1000,500,500,700,700};
+    uint16_t testInput[6] = {BLUE,OFF,BLUE,BLUE,YELLOW,YELLOW};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(2,testWires.calculateSolution());
@@ -136,7 +143,7 @@ TEST(SolutionTest, FiveWiresTestNoBlack){
 
 TEST(SolutionTest, FiveWiresTestNoMatch){
     //Black, Blue, Blue, Yellow, Yellow
-    uint16_t testInput[6] = {1000,800,500,500,700,700};
+    uint16_t testInput[6] = {OFF,BLACK,BLUE,BLUE,YELLOW,YELLOW};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(1,testWires.calculateSolution());
@@ -144,7 +151,7 @@ TEST(SolutionTest, FiveWiresTestNoMatch){
 
 TEST(SolutionTest, SixWiresTestNoYellowOdd){
     //Black, Blue, Blue, Red, Black, Red
-    uint16_t testInput[6] = {800,500,500,100,800,100};
+    uint16_t testInput[6] = {BLACK,BLUE,BLUE,RED,BLACK,RED};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(2,testWires.calculateSolution());
@@ -152,7 +159,7 @@ TEST(SolutionTest, SixWiresTestNoYellowOdd){
 
 TEST(SolutionTest, SixWiresTestNoYellowEven){
     //Black, Blue, Blue, Red, Black, Red
-    uint16_t testInput[6] = {800,500,500,100,800,100};
+    uint16_t testInput[6] = {BLACK,BLUE,BLUE,RED,BLACK,RED};
     SimpleWires testWires(testInput, 0);
 
     EXPECT_EQ(3,testWires.calculateSolution());
@@ -160,7 +167,7 @@ TEST(SolutionTest, SixWiresTestNoYellowEven){
 
 TEST(SolutionTest, SixWiresTestOneYellowNoWhite){
     //Black, Yellow, Blue, Red, Black, Red
-    uint16_t testInput[6] = {800,700,500,100,800,100};
+    uint16_t testInput[6] = {BLACK,YELLOW,BLUE,RED,BLACK,RED};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(3,testWires.calculateSolution());
@@ -168,7 +175,7 @@ TEST(SolutionTest, SixWiresTestOneYellowNoWhite){
 
 TEST(SolutionTest, SixWiresTestOneYellowManyWhite){
     //White, Yellow, Blue, Red, Black, White
-    uint16_t testInput[6] = {300,700,500,100,800,300};
+    uint16_t testInput[6] = {WHITE,YELLOW,BLUE,RED,BLACK,WHITE};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(3,testWires.calculateSolution());
@@ -176,7 +183,7 @@ TEST(SolutionTest, SixWiresTestOneYellowManyWhite){
 
 TEST(SolutionTest, SixWiresTestNoRed){
     //White, Yellow, Yellow, Blue, White, White
-    uint16_t testInput[6] = {300,700,700,500,300,300};
+    uint16_t testInput[6] = {WHITE,YELLOW,YELLOW,BLUE,WHITE,WHITE};
     SimpleWires testWires(testInput, 1);
 
     EXPECT_EQ(5,testWires.calculateSolution());
@@ -184,7 +191,7 @@ TEST(SolutionTest, SixWiresTestNoRed){
 
 TEST(SolutionTest, SixWiresTestNoMatch){
     //Black, Blue, Blue, Red, Black, Red
-    uint16_t testInput[6] = {800,500,500,100,800,100};
+    uint16_t testInput[6] = {BLACK,BLUE,BLUE,RED,BLACK,RED};
     SimpleWires testWires(testInput, 0);
 
     EXPECT_EQ(3,testWires.calculateSolution());

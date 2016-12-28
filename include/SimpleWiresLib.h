@@ -22,7 +22,7 @@ public:
     static const int YELLOW;
     static const int BLACK;
 
-    static const WIRE WIRES[6];
+//    static const WIRE WIRES[6];
 
     SimpleWires(uint16_t wires[], uint8_t serialNumberOdd);
 
