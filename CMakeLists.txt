@@ -11,7 +11,7 @@ endif()
 if(MSVC)
     #vc 2012 fix for vararg templates
     set(MSVC_COMPILER_DEFS "-D_VARIADIC_MAX=10")
-endif() 
+endif()
 #-------------------
 # set common include folder for module
 #-------------------
@@ -24,7 +24,7 @@ set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/ext)
 set(PROJECT_LIB_NAME ${PROJECT_NAME_STR}_impl)
 
 include_directories(${COMMON_INCLUDES})
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/SimpleWires/*.cpp)
 add_library(${PROJECT_LIB_NAME} ${SRC_FILES})
 
 add_subdirectory(${EXT_PROJECTS_DIR}/gtest)

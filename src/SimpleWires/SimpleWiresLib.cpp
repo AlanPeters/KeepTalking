@@ -1,5 +1,5 @@
 #include "SimpleWiresLib.h"
-
+#include "stdint.h"
 
 const int SimpleWires::OFF = 0,
       SimpleWires::RED = 1,
@@ -8,22 +8,41 @@ const int SimpleWires::OFF = 0,
       SimpleWires::YELLOW = 4,
       SimpleWires::BLACK = 5;
 
-//const WIRE SimpleWires::WIRES[6] = {
-    //{"OFF", 936, 1023},
-    //{"RED", 0,255},
-    //{"WHITE", 256, 419},
-    //{"BLUE", 420, 608},
-    //{"YELLOW", 609, 776},
-    //{"BLACK", 777,935} };
+const uint8_t SimpleWires::SOLVED = 1,
+        SimpleWires::STRIKE = 2;
 
 
-SimpleWires::SimpleWires(uint16_t wires[], uint8_t serialNumberOdd){
-    SerialNumberOdd = serialNumberOdd;
+
+SimpleWires::SimpleWires(){
+
+}
+
+void SimpleWires::setup(uint16_t (&wires)[6], uint8_t serialNumberOdd){
+    this->serialNumberOdd = serialNumberOdd;
     for(int i = 0; i < 6; i++){
         this->wires[i] = wires[i];
     }
+    solution = calculateSolution();
 }
 
+
+SimpleWires::CHECK_RETURN SimpleWires::check(uint16_t (&wires)[6]){
+    int solved = 0;
+    int strikes = 0;
+    CHECK_RETURN return_val = {0,0};
+
+    for(int i = 0; i < 6; i++){
+        if(wires[i] != this->wires[i]){
+            this->wires[i] = wires[i];
+            if(i == solution){
+                return_val.solved = 1;
+            } else {
+                return_val.strikes++;
+            }
+        }
+    }
+    return return_val;
+}
 
 uint8_t SimpleWires::calculateSolution(){
     uint8_t numWires = 6 - countColor(OFF);
@@ -40,7 +59,7 @@ uint8_t SimpleWires::calculateSolution(){
         return getLastWirePosition();
     }
     if(numWires == 4){
-        if(countColor(RED)>1 && SerialNumberOdd != 0){
+        if(countColor(RED)>1 && serialNumberOdd != 0){
             return getLastColorPos(RED);
         }
         if(wires[getLastWirePosition()]==YELLOW && countColor(RED)==0){
@@ -55,7 +74,7 @@ uint8_t SimpleWires::calculateSolution(){
         return getWireAtPosition(1);
     }
     if(numWires == 5){
-        if(wires[getLastWirePosition()]==BLACK && SerialNumberOdd !=0){
+        if(wires[getLastWirePosition()]==BLACK && serialNumberOdd !=0){
             return getWireAtPosition(3);
         }
         if(countColor(RED)==1 && countColor(YELLOW)>1){
@@ -67,7 +86,7 @@ uint8_t SimpleWires::calculateSolution(){
         return getWireAtPosition(0);
     }
     if(numWires == 6){
-        if(countColor(YELLOW)==0 && SerialNumberOdd){
+        if(countColor(YELLOW)==0 && serialNumberOdd){
             return getWireAtPosition(2);
         }
         if(countColor(YELLOW)==1 && countColor(WHITE) > 1){
