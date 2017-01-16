@@ -1,7 +1,7 @@
 #include "SimpleWiresLib.h"
 #include "stdint.h"
 
-const int SimpleWires::OFF = 0,
+const uint8_t SimpleWires::OFF = 0,
       SimpleWires::RED = 1,
       SimpleWires::WHITE = 2,
       SimpleWires::BLUE = 3,
@@ -17,7 +17,7 @@ SimpleWires::SimpleWires(){
 
 }
 
-void SimpleWires::setup(uint16_t (&wires)[6], uint8_t serialNumberOdd){
+void SimpleWires::setup(uint8_t (&wires)[6], uint8_t serialNumberOdd){
     this->serialNumberOdd = serialNumberOdd;
     for(int i = 0; i < 6; i++){
         this->wires[i] = wires[i];
@@ -26,7 +26,7 @@ void SimpleWires::setup(uint16_t (&wires)[6], uint8_t serialNumberOdd){
 }
 
 
-SimpleWires::CHECK_RETURN SimpleWires::check(uint16_t (&wires)[6]){
+SimpleWires::CHECK_RETURN SimpleWires::check(uint8_t (&wires)[6]){
     int solved = 0;
     int strikes = 0;
     CHECK_RETURN return_val = {0,0};

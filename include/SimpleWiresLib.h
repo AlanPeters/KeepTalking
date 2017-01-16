@@ -22,12 +22,12 @@ public:
         uint8_t solved;
     };
 
-    static const int OFF;
-    static const int RED;
-    static const int WHITE;
-    static const int BLUE;
-    static const int YELLOW;
-    static const int BLACK;
+    static const uint8_t OFF;
+    static const uint8_t RED;
+    static const uint8_t WHITE;
+    static const uint8_t BLUE;
+    static const uint8_t YELLOW;
+    static const uint8_t BLACK;
 
     static const uint8_t SOLVED;
     static const uint8_t STRIKE;
@@ -35,7 +35,7 @@ public:
 //    static const WIRE WIRES[6];
 
     SimpleWires();
-    void setup (uint16_t (&wires)[6], uint8_t serialNumberOdd);
+    void setup (uint8_t (&wires)[6], uint8_t serialNumberOdd);
 
     uint8_t countColor(int color);
     uint8_t getLastWirePosition();
@@ -44,7 +44,7 @@ public:
     uint8_t getLastColorPos(int color);
     uint8_t calculateSolution();
 
-    CHECK_RETURN check(uint16_t (&wires)[6]);
+    CHECK_RETURN check(uint8_t (&wires)[6]);
 };
 
 #endif
