@@ -1,8 +1,7 @@
-Keep Talking and Nobody Explodes Physical Modules
+# Keep Talking and Nobody Explodes Physical Modules
 
 
-
-Testing
+## Testing
 
 1. Google test will be downloaded from GitHub and built
 
